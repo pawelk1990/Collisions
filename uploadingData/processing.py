@@ -23,7 +23,7 @@ def detect_COLLSTOP_standart(zip_file, src_file, collision_string):
     
 def read_file(zip_file, src_file):
     with zip_file.open(src_file) as sf:
-        collisions = [detect_COLLSTOP_standart(zip_file, src_file, line.decode('UTF-8')) for line in sf if b'COLLSTOP' in line] 
+        [detect_COLLSTOP_standart(zip_file, src_file, line.decode('UTF-8')) for line in sf if b'COLLSTOP' in line] 
 
 def file_processing(uploaded_file):
     zf = zipfile.ZipFile(uploaded_file)

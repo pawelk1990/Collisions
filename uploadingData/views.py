@@ -26,21 +26,14 @@ class FileFieldView(FormView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
-        
-
-
-# def upload_file(request):
-#     if request.method == 'POST':
-#         form = RobotForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             return render(request, "uploadingData/home.html")
-#     else:
-#         form = RobotForm()
-#     return render(request, 'uploadingData/form.html', {'form': form})
-
 
 def home_page(request):
     return render(request, "uploadingData/home.html")
 
 def form_page(request):
     return render(request, "uploadingData/form.html")
+
+def robots_page(request):
+    robots = Robot.objects.values('robot_name')
+    context = {'r': robots}
+    return render(request, "uploadingData/robots.html", context)
