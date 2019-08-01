@@ -1,9 +1,10 @@
 import zipfile
 import re
-from .models import Robot
+from .models import Robot, RobotData
 
 def populate_database(robot_name, program_name, collision_number, on_or_off):
-    Robot.objects.create(robot_name=robot_name, program_name =program_name, collision_number = collision_number, on_or_off =on_or_off)
+    Robot.objects.get_or_create(robot_name=robot_name)
+    RobotData.objects.get_or_create(robot_name = Robot.objects.get(robot_name=robot_name), program_name =program_name, collision_number = collision_number, on_or_off =on_or_off)
 
 # COLLSTOP( 8, 1 )means start collision number 8, COLLSTOP( 8, 2 )means end collision number 8
 def detect_COLLSTOP_standart(zip_file, src_file, collision_string):
@@ -16,7 +17,7 @@ def detect_COLLSTOP_standart(zip_file, src_file, collision_string):
             enabling_collision = False  
         else: 
             enabling_collision = None 
-        populate_database(zip_file.filename, src_file.split('/')[-1], collision_number, enabling_collision)        
+        populate_database(zip_file.filename.split(".")[0], src_file.split('/')[-1], collision_number, enabling_collision)        
     else:
         pass
         #print(zip_file.filename, src_file.split('/')[-1], collision_string)

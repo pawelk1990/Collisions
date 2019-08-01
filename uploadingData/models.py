@@ -4,6 +4,9 @@ from django.db import models
 class Robot(models.Model):
     robot_name =  models.CharField(max_length=50,  primary_key=True, unique = True)
 
+    def __str__(self):
+        return '%s' % (self.robot_name)
+
 class RobotData(models.Model):
     robot_name =  models.ForeignKey(Robot, on_delete=models.CASCADE)
     program_name =models.CharField(max_length=50)
