@@ -1,3 +1,4 @@
-{% for item in r %}
-        <a>{{item.robot_name}}</a>
+{% for item in robots %}
+        <li><a href="/upload/{{ item.robot_name }}">{{ item.robot_name }}</a></li>
 {% endfor %}
+

@@ -1,1 +1,7 @@
 <h1>Hello from template</h1>
+
+{% for item in programs %}
+        <li>{{ item.program_name }}</li>
+{% endfor %}
+
+<a href="/upload/{{ robot_name }}/compare">compare</a>
