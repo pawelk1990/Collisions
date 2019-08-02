@@ -1,6 +1,11 @@
-<h1>You are in compare</h1>
+{% extends "uploadingData/base.html" %}
+{% block content %}
+
+<h3>Choose one robot to compare:</h3>
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Send message">
+    <input type="submit" value="Confirm">
 </form>
+
+{% endblock %}

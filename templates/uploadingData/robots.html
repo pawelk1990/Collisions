@@ -1,4 +1,11 @@
+{% extends "uploadingData/base.html" %}
+
+{% block content %}
+
+<h3>Uploaded robots:</h3>
+
 {% for item in robots %}
         <li><a href="/upload/{{ item.robot_name }}">{{ item.robot_name }}</a></li>
 {% endfor %}
 
+{% endblock %}

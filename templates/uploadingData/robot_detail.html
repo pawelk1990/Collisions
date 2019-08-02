@@ -1,0 +1,14 @@
+{% extends "uploadingData/base.html" %}
+
+{% block content %}
+
+<h3>Robot {{ robot_name }} programs:</h3>
+
+{% for item in programs %}
+        <li>{{ item.program_name }}</li>
+{% endfor %}
+
+<a href="/upload/{{ robot_name }}/compare">compare</a>
+<a href="/upload/{{ robot_name }}/delete">delete</a>
+
+{% endblock %}

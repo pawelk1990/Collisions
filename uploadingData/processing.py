@@ -20,7 +20,7 @@ def detect_COLLSTOP_standart(zip_file, src_file, collision_string):
         populate_database(zip_file.filename.split(".")[0], src_file.split('/')[-1], collision_number, enabling_collision)        
     else:
         pass
-        #print(zip_file.filename, src_file.split('/')[-1], collision_string)
+        #to add
     
 def read_file(zip_file, src_file):
     with zip_file.open(src_file) as sf:
