@@ -1,7 +1,17 @@
 {% extends "uploadingData/base.html" %}
 {% block content %}
 
-<li>{{first}}</li>
-<li>{{second}}</li>
+
+{% load render_table from django_tables2 %}
+<!doctype html>
+<html>
+    <head>
+        <title>List of persons</title>
+    </head>
+    <body>
+        {% render_table programs %}
+    </body>
+</html>
+
 
 {% endblock %}

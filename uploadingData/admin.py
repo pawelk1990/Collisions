@@ -1,6 +1,14 @@
 from django.contrib import admin
-from .models import Robot, RobotData
+from .models import Robot, RobotData, RobotError
+from .list_filters import RobotNameFilter, RobotProgramFilter
 # Register your models here.
 
-admin.site.register(Robot)
-admin.site.register(RobotData)#TODO filtering, django.cotrib
+
+@admin.register(RobotData)
+class RobotDataAdmin(admin.ModelAdmin):
+    list_filter = (RobotNameFilter, RobotProgramFilter)
+
+
+@admin.register(RobotError)
+class RobotErrorAdmin(admin.ModelAdmin):
+    list_filter = (RobotNameFilter, )

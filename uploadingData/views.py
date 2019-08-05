@@ -5,6 +5,8 @@ from .processing import file_processing
 from .forms import RobotForm, RobotChooseForm
 from .models import Robot, RobotData
 from .output import creating_output
+from django_tables2 import RequestConfig
+
 
 
 class FileFieldView(FormView):
@@ -36,9 +38,11 @@ class ComparePage(FormView):
             return self.form_invalid(form)
    
 def compare_robots_page(request, first, second):
-    context = {"first" : first, "second" : second}
+    #context = {"first" : first, "second" : second}
     creating_output(first, second)
-    return render(request, "uploadingData/compare_robots.html", context)  
+    first = RobotData.objects.filter(robot_name = first).values('program_name').distinct()
+    second = RobotData.objects.filter(robot_name = second).distinct()
+    return render(request, "uploadingData/compare_robots.html", creating_output(first, second))  
 
 def robot_detail_page(request, robot_name):
     programs = RobotData.objects.filter(robot_name = robot_name).values('program_name').distinct()
