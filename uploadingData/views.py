@@ -39,10 +39,11 @@ class ComparePage(FormView):
    
 def compare_robots_page(request, first, second):
     #context = {"first" : first, "second" : second}
-    creating_output(first, second)
-    first = RobotData.objects.filter(robot_name = first).values('program_name').distinct()
-    second = RobotData.objects.filter(robot_name = second).distinct()
-    return render(request, "uploadingData/compare_robots.html", creating_output(first, second))  
+    print(creating_output(first, second))
+    # first = RobotData.objects.filter(robot_name = first).values('program_name').distinct()
+    # second = RobotData.objects.filter(robot_name = second).distinct()
+    return HttpResponse(creating_output(first, second).to_html())
+    # return render(request, "uploadingData/compare_robots.html", {'programs':first})  
 
 def robot_detail_page(request, robot_name):
     programs = RobotData.objects.filter(robot_name = robot_name).values('program_name').distinct()

@@ -15,8 +15,7 @@ def creating_output(first, second): #TODO logger.info/logging.info
         col_s = set(RobotData.objects.filter(robot_name = second, program_name = p[1]).values_list('collision_number', flat=True).distinct())
         df.set_value(p[0], p[1], col_f.intersection(col_s))
 
-        print(p, col_f, col_s, col_f.intersection(col_s))
+        #print(p, col_f, col_s, col_f.intersection(col_s))
 
-    print(df)
+    #print(df)
     return df
-
