@@ -1,17 +1,23 @@
 {% extends "uploadingData/base.html" %}
 {% block content %}
 
+{% if first != second %}
 
-{% load render_table from django_tables2 %}
-<!doctype html>
-<html>
-    <head>
-        <title>List of persons</title>
-    </head>
-    <body>
-        {% render_table programs %}
-    </body>
-</html>
+{{programs |safe}}
 
+{% else %}
+<h1>Error, you gave the same robots</h1>
+
+{% endif %}
+
+<h1>{{first}}</h1>
+{% for item in errors_f %}
+        <li>{{item.program_name}} {{item.robot_error}}</li>
+{% endfor %}
+
+<h1>{{second}}</h1>
+{% for item in errors_s %}
+        <li>{{item.program_name}} {{item.robot_error}}</li>
+{% endfor %}
 
 {% endblock %}

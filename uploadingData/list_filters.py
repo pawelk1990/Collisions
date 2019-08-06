@@ -11,7 +11,7 @@ class RobotNameFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value():
-            return queryset.filter(robot_name = self.value())
+            return queryset.filter(robot_name = self.value()).order_by('program_name')
         else: 
            return queryset
 

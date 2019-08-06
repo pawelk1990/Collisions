@@ -1,7 +1,6 @@
 import zipfile
 import re
 from .models import Robot, RobotData, RobotError
-import logging
 
 def populate_database(robot_name, program_name, collision_number, on_or_off):
     Robot.objects.get_or_create(robot_name=robot_name)

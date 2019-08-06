@@ -17,5 +17,5 @@ urlpatterns = [
     path('<str:robot_name>', robot_detail_page),
     path('<str:robot_name>/delete', robot_delete_page),
     path('<str:robot_name>/compare', ComparePage.as_view()),
-    path('<str:first>/<str:second>', compare_robots_page),
+    path('<str:first>/<str:second>/<str:collision_on>', compare_robots_page),
 ]
