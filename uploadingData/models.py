@@ -1,8 +1,12 @@
 from django.db import models
+from django.conf import settings
+from django.contrib.auth.models import User
 
+#User = settings.AUTH_USER_MODEL
 # Create your models here.
 class Robot(models.Model):
-    robot_name =  models.CharField(max_length=50,  primary_key=True, unique = True)
+    user = models.ForeignKey(User, default = 1, on_delete=models.CASCADE)
+    robot_name =  models.CharField(max_length=50)
 
     def __str__(self):
         return f'{self.robot_name}'

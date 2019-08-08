@@ -6,7 +6,7 @@ from .forms import RobotForm, RobotChooseForm
 from .models import Robot, RobotData, RobotError
 from .output import creating_output
 from django_tables2 import RequestConfig
-
+from django.contrib.admin.views.decorators import staff_member_required
 
 class FileFieldView(FormView):
     form_class = RobotForm
@@ -17,8 +17,9 @@ class FileFieldView(FormView):
         form = self.get_form(form_class)
         files = request.FILES.getlist('robot_files')
         if form.is_valid():
+            user = request.user
             for f in files:
-                file_processing(f)            
+                file_processing(f, user)            
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
@@ -35,7 +36,7 @@ class ComparePage(FormView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
-   
+@staff_member_required   
 def compare_robots_page(request, first, second, collision_on):    
     errors_f = RobotError.objects.filter(robot_name = first)
     errors_s = RobotError.objects.filter(robot_name = second)
@@ -43,19 +44,23 @@ def compare_robots_page(request, first, second, collision_on):
     'errors_f':errors_f, 'errors_s':errors_s}
     return render(request, "uploadingData/compare_robots.html", contex)  
 
+@staff_member_required
 def robot_detail_page(request, robot_name):
     programs = RobotData.objects.filter(robot_name = robot_name).values('program_name').distinct()
     context = {'programs': programs, 'robot_name': robot_name }
     return render(request, "uploadingData/robot_detail.html", context)
 
+@staff_member_required
 def form_page(request):
     return render(request, "uploadingData/form.html")
 
+@staff_member_required
 def robots_page(request):
     robots = Robot.objects.values('robot_name').distinct()
     context = {'robots': robots}
     return render(request, "uploadingData/robots.html", context)
 
+@staff_member_required
 def robot_delete_page(request, robot_name):
     obj = Robot.objects.get(robot_name=robot_name)    
     obj.delete()
