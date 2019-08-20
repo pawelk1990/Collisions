@@ -2,7 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
-#User = settings.AUTH_USER_MODEL
+User = settings.AUTH_USER_MODEL
 # Create your models here.
 class Robot(models.Model):
     user = models.ForeignKey(User, default = 1, on_delete=models.CASCADE)

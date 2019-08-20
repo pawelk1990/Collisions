@@ -36,6 +36,7 @@ class ComparePage(FormView):
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
+
 @staff_member_required   
 def compare_robots_page(request, first, second, collision_on):    
     errors_f = RobotError.objects.filter(robot_name = first)
