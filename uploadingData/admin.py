@@ -3,6 +3,7 @@ from .models import Robot, RobotData, RobotError
 from .list_filters import RobotNameFilter, RobotProgramFilter
 # Register your models here.
 
+admin.site.register(Robot)
 
 @admin.register(RobotData)
 class RobotDataAdmin(admin.ModelAdmin):
