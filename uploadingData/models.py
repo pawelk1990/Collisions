@@ -1,12 +1,12 @@
 from django.db import models
-from django.conf import settings
-from django.contrib.auth.models import User
 
+<<<<<<< HEAD
 User = settings.AUTH_USER_MODEL
+=======
+>>>>>>> parent of 03b7948... add user identification
 # Create your models here.
 class Robot(models.Model):
-    user = models.ForeignKey(User, default = 1, on_delete=models.CASCADE)
-    robot_name =  models.CharField(max_length=50)
+    robot_name =  models.CharField(max_length=50,  primary_key=True, unique = True)
 
     def __str__(self):
         return f'{self.robot_name}'

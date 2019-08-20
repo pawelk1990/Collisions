@@ -1,8 +1,6 @@
 
 from django.contrib import admin
 from django.urls import path
-from django.contrib.admin.views.decorators import staff_member_required
-
 from .views import (
     form_page,
     FileFieldView,
@@ -14,10 +12,10 @@ from .views import (
 )
 
 urlpatterns = [
-    path('', staff_member_required(FileFieldView.as_view())),
+    path('', FileFieldView.as_view()),
     path('robots', robots_page),
     path('<str:robot_name>', robot_detail_page),
     path('<str:robot_name>/delete', robot_delete_page),
-    path('<str:robot_name>/compare', staff_member_required(ComparePage.as_view())),
+    path('<str:robot_name>/compare', ComparePage.as_view()),
     path('<str:first>/<str:second>/<str:collision_on>', compare_robots_page),
 ]
