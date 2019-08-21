@@ -1,7 +1,7 @@
 {% extends "uploadingData/base.html" %}
 {% block content %}
 
-<h3>Choose one robot to compare:</h3>
+<h3>Choose one robot to compare with {{robot_name}}:</h3>
 
 <form method="post">{% csrf_token %}
     {{ form.as_p }}

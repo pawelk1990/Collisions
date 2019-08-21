@@ -7,10 +7,10 @@ from .views import (
     form_page,
     FileFieldView,
     robots_page, 
-    ComparePage,
     robot_detail_page,
     compare_robots_page,
-    robot_delete_page
+    robot_delete_page, 
+    form_compare,
 )
 
 urlpatterns = [
@@ -18,6 +18,6 @@ urlpatterns = [
     path('robots', robots_page),
     path('<str:robot_name>', robot_detail_page),
     path('<str:robot_name>/delete', robot_delete_page),
-    path('<str:robot_name>/compare', staff_member_required(ComparePage.as_view())),
+    path('<str:robot_name>/compare', form_compare),
     path('<str:first>/<str:second>/<str:collision_on>', compare_robots_page),
 ]

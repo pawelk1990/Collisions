@@ -4,9 +4,11 @@ from django.views.generic.edit import FormView
 from .processing import file_processing
 from .forms import RobotForm, RobotChooseForm
 from .models import Robot, RobotData, RobotError
-from .output import creating_output
+from .output import creating_output, robot_details
 from django_tables2 import RequestConfig
 from django.contrib.admin.views.decorators import staff_member_required
+from django.http import Http404
+import zipfile
 
 
 class FileFieldView(FormView):
@@ -18,40 +20,48 @@ class FileFieldView(FormView):
         form = self.get_form(form_class)
         files = request.FILES.getlist('robot_files')
         if form.is_valid():
-            for f in files:
-                file_processing(f, request.user)            
+            for f in files:                
+                if zipfile.is_zipfile(f):
+                    file_processing(f, request.user)   
+                else:
+                    return HttpResponse("Wrong file, <a href=\"/upload\">try again</a>")
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
 
-class ComparePage(FormView):
-    form_class = RobotChooseForm
-    template_name = 'uploadingData/compare.html'
-    def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)        
-        if form.is_valid():             
-            context = form.cleaned_data
-            self.success_url = str(context["choice"])+'/'+str(context["collision_on"])
-            return self.form_valid(form)
+@staff_member_required
+def form_compare(request, robot_name):
+    form_class = RobotChooseForm(request.POST, request = request, robot = robot_name)
+
+    if request.method == 'POST':
+        if form_class.is_valid():
+            robot_to_compare = request.POST.get('choice')
+            collision_on = request.POST.get('collision_on')
+            coll = None
+            if collision_on!=None:
+                coll = True
+            else:
+                coll = False
+            return redirect('/upload/'+ robot_name + '/'+ str(Robot.objects.get(pk = robot_to_compare))+'/'+str(coll))
         else:
-            return self.form_invalid(form)
+            raise Http404 
+
+    return render(request, 'uploadingData/compare.html', {'form': form_class, 'robot_name': robot_name})
+
    
 @staff_member_required
 def compare_robots_page(request, first, second, collision_on): 
     ref_f = Robot.objects.get(author = request.user, robot_name = first)
     ref_s = Robot.objects.get(author = request.user, robot_name = second)   
-    errors_f = RobotError.objects.filter(robot_name = ref_f)
-    errors_s = RobotError.objects.filter(robot_name = ref_s)
-    contex = {'programs':creating_output(ref_f, ref_s, collision_on).to_html(), 'first': first, 'second': second,
-    'errors_f':errors_f, 'errors_s':errors_s}
+    
+    contex = {'programs':creating_output(ref_f, ref_s, collision_on).to_html(), 'first': first, 'second': second}
     return render(request, "uploadingData/compare_robots.html", contex)  
 
 @staff_member_required
 def robot_detail_page(request, robot_name):
     ref = Robot.objects.get(author = request.user, robot_name = robot_name)
-    programs = RobotData.objects.filter(robot_name = ref).values('program_name').distinct()
-    context = {'programs': programs, 'robot_name': robot_name }
+    errors = RobotError.objects.filter(robot_name = ref)
+    context = {'programs': robot_details(ref).to_html(), 'robot_name': robot_name, 'errors': errors }
     return render(request, "uploadingData/robot_detail.html", context)
 
 @staff_member_required
@@ -61,7 +71,6 @@ def form_page(request):
 @staff_member_required
 def robots_page(request):
     robots = Robot.objects.filter(author = request.user).values('robot_name').distinct()
-    print(request.user)
     context = {'robots': robots}
     return render(request, "uploadingData/robots.html", context)
 

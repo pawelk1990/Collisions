@@ -1,23 +1,6 @@
 {% extends "uploadingData/base.html" %}
 {% block content %}
 
-{% if first != second %}
-
 {{programs |safe}}
-
-{% else %}
-<h1>Error, you gave the same robots</h1>
-
-{% endif %}
-
-<h1>{{first}}</h1>
-{% for item in errors_f %}
-        <li>{{item.program_name}} {{item.robot_error}}</li>
-{% endfor %}
-
-<h1>{{second}}</h1>
-{% for item in errors_s %}
-        <li>{{item.program_name}} {{item.robot_error}}</li>
-{% endfor %}
 
 {% endblock %}

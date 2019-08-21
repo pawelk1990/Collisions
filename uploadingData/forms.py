@@ -8,11 +8,13 @@ class RobotChooseForm(forms.Form):
     choice = forms.ModelChoiceField(queryset = Robot.objects.all())
     collision_on = forms.BooleanField(required=False)
 
-    def __init__(self, *args,**kwargs):
-        user = kwargs.pop('user')
-        super(RobotChooseForm,self).__init__(*args,**kwargs)
-        print(user)
-
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        robot = kwargs.pop("robot")
+        super(RobotChooseForm, self).__init__(*args, **kwargs)
+        self.fields['choice'].queryset = Robot.objects.filter(author = self.request.user).exclude(robot_name = robot)
+    
+   
 
 
     

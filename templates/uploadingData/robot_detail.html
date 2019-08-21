@@ -2,11 +2,14 @@
 
 {% block content %}
 
-<h3>Robot {{ robot_name }} programs:</h3>
+<h3>Robot {{ robot_name }}:</h3>
 
-{% for item in programs %}
-        <li>{{ item.program_name }}</li>
+{{programs | safe}}
+
+{% for item in errors %}
+        <li>{{item.program_name}} {{item.robot_error}}</li>
 {% endfor %}
+
 
 <a href="/upload/{{ robot_name }}/compare">compare</a>
 <a href="/upload/{{ robot_name }}/delete">delete</a>
