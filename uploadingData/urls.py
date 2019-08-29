@@ -11,10 +11,14 @@ from .views import (
     compare_robots_page,
     robot_delete_page, 
     form_compare,
+    login,
+    logout
 )
 
 urlpatterns = [
-    path('', staff_member_required(FileFieldView.as_view())),
+    path('', staff_member_required(FileFieldView.as_view(), login_url = '/login')),
+    path('login', login),
+    path('logout', logout),
     path('robots', robots_page),
     path('<str:robot_name>', robot_detail_page),
     path('<str:robot_name>/delete', robot_delete_page),

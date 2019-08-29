@@ -5,7 +5,9 @@
 <h3>Uploaded robots:</h3>
 
 {% for item in robots %}
-        <li><a href="/upload/{{ item.robot_name }}">{{ item.robot_name }}</a></li>
+<div class="list-group">
+        <a href="{{ item.robot_name }}" class="list-group-item list-group-item-action">{{ item.robot_name }}</a>
+</div>
 {% endfor %}
 
 {% endblock %}

@@ -1,6 +1,10 @@
 from django import forms
 from .models import Robot
 
+class LoginForm(forms.Form):
+    login =  forms.CharField(label='Login', max_length=100)
+    password =  forms.CharField(label='Password', max_length=100, widget=forms.PasswordInput)
+
 class RobotForm (forms.Form):
     robot_files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
