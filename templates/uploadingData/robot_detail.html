@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<h3>Robot {{ robot_name }}:</h3>
+{{ robot_name }}:
 
 {{programs | safe}}
 
 <div style="margin-top:30px">
 {% for item in errors %}
 <ul class="list-group " >
-        <li class="list-group-item "><b>{{item.program_name}}</b> {{item.robot_error}}</li>
+        <li class="list-group-item"><b>{{item.program_name}}</b> {{item.robot_error}}</li>
 </ul>
 
 {% endfor %}
