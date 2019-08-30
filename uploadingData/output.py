@@ -13,7 +13,8 @@ def creating_output(first, second, collision_on):
     for p in pos:
         col_f = set(RobotData.objects.filter(robot_name = first, program_name = p[0], on_or_off = collision_on).values_list('collision_number', flat=True).distinct())
         col_s = set(RobotData.objects.filter(robot_name = second, program_name = p[1], on_or_off = collision_on).values_list('collision_number', flat=True).distinct())
-        df.at[p[0], p[1]] = col_f.intersection(col_s)
+        seperator = ', '
+        df.at[p[0], p[1]] = seperator.join([str(i) for i in col_f.intersection(col_s)])
     
     columns_name = [(second, col) for col in df.columns]
     df.columns = pd.MultiIndex.from_tuples(columns_name)
@@ -34,7 +35,7 @@ def robot_details(robot):
         if on ==0 and off ==0:
             df.at[p[0], p[1]] = ''
         elif on == off :
-            df.at[p[0], p[1]] = {'on':on}, {'off':off}
+            df.at[p[0], p[1]] = str('on:'+ str(on) +' off:'+str(off))
         else:
-            df.at[p[0], p[1]] = {'on':on}, {'off':off}, 'Check'
+            df.at[p[0], p[1]] = str('on:'+ str(on) +' off:'+str(off)+ ' Check')
     return df
