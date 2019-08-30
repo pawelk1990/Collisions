@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<h3>Uploaded robots:</h3>
+<h1>Uploaded robots:</h1>
 
 {% for item in robots %}
 <div class="list-group">
-        <a class="list-group-item" href="{{ item.robot_name }}" class="list-group-item list-group-item-action">{{ item.robot_name }}</a>
+                <a class="list-group-item text-break" href="{{ item.robot_name }}" >{{ item.robot_name }}</a>
 </div>
 {% endfor %}
 
